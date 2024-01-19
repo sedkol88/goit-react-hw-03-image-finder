@@ -7,7 +7,11 @@ const ImageGalleryItem = ({ showModal, items }) => {
       key={id}
       onClick={() => showModal({ largeImageURL })}
     >
-      <img className={styles.ImageGalleryItemImage} src={webformatURL} />
+      <img
+        className={styles.ImageGalleryItemImage}
+        src={webformatURL}
+        alt="picture small"
+      />
     </li>
   ));
 

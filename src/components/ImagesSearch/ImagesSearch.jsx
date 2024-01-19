@@ -101,7 +101,11 @@ class ImagesSearch extends Component {
         )}
         {modalOpen && (
           <Modal close={closeModal}>
-            <img className={styles.image} src={postDetails.largeImageURL} />
+            <img
+              className={styles.image}
+              src={postDetails.largeImageURL}
+              alt="picture big"
+            />
           </Modal>
         )}
       </>
