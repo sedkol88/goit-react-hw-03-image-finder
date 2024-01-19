@@ -10,7 +10,7 @@ const ImageGalleryItem = ({ showModal, items }) => {
       <img
         className={styles.ImageGalleryItemImage}
         src={webformatURL}
-        alt="picture small"
+        alt="small view"
       />
     </li>
   ));

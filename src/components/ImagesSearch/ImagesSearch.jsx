@@ -104,7 +104,7 @@ class ImagesSearch extends Component {
             <img
               className={styles.image}
               src={postDetails.largeImageURL}
-              alt="picture big"
+              alt="big view"
             />
           </Modal>
         )}
