@@ -56,8 +56,12 @@ class ImagesSearch extends Component {
     });
   };
 
+  // loadMore = () => {
+  //   this.setState(({ page }) => ({ page: page + 1 }));
+  // };
+
   loadMore = () => {
-    this.setState(({ page }) => ({ page: page + 1 }));
+    this.setState(prevState => ({ page: prevState.page + 1 }), this.fetchPosts);
   };
 
   showModal = ({ largeImageURL }) => {
