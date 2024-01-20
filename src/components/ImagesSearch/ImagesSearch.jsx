@@ -18,9 +18,10 @@ class ImagesSearch extends Component {
     page: 1,
     modalOpen: false,
     postDetails: {},
+    totalHits: 0,
   };
 
-  async componentDidUpdate(_, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { search, page } = this.state;
     if (search && (search !== prevState.search || page !== prevState.page)) {
       this.fetchPosts();
@@ -34,8 +35,9 @@ class ImagesSearch extends Component {
         loading: true,
       });
       const { data } = await searchPosts(search, page);
-      this.setState(({ posts }) => ({
+      this.setState(({ posts, totalHits }) => ({
         posts: data?.hits?.length ? [...posts, ...data.hits] : posts,
+        totalHits: data.totalHits,
       }));
     } catch (error) {
       this.setState({
@@ -56,12 +58,8 @@ class ImagesSearch extends Component {
     });
   };
 
-  // loadMore = () => {
-  //   this.setState(({ page }) => ({ page: page + 1 }));
-  // };
-
   loadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }), this.fetchPosts);
+    this.setState(({ page }) => ({ page: page + 1 }));
   };
 
   showModal = ({ largeImageURL }) => {
@@ -82,7 +80,8 @@ class ImagesSearch extends Component {
 
   render() {
     const { handleSearch, loadMore, showModal, closeModal } = this;
-    const { posts, loading, error, modalOpen, postDetails } = this.state;
+    const { posts, loading, error, modalOpen, postDetails, totalHits } =
+      this.state;
 
     const isPosts = Boolean(posts.length);
 
@@ -92,13 +91,17 @@ class ImagesSearch extends Component {
         {error && <p className={styles.error}>{error}</p>}
         {loading && <Loader />}
         {isPosts && <ImageGallery showModal={showModal} items={posts} />}
+
         {isPosts && (
           <div className={styles.loadMoreWrapper}>
-            <Button onClick={loadMore} type="button">
-              Load more
-            </Button>
+            {posts.length < totalHits && (
+              <Button onClick={loadMore} type="button">
+                Load more
+              </Button>
+            )}
           </div>
         )}
+
         {modalOpen && (
           <Modal close={closeModal}>
             <img
